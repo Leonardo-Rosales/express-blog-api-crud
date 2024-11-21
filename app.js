@@ -6,8 +6,8 @@ const postsRouter = require('./routers/posts')
 const posts = require('./data/posts')
 
 
-app.use(express.static('public'))
 app.use(express.json())
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
 	res.send('<h1>express-blog-intro</h1>');

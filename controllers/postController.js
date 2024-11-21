@@ -43,6 +43,16 @@ function store(req, res) {
 	const { titolo, contenuto, immagine, tags } = req.body
 	console.log(titolo, contenuto, immagine, tags);
 
+	const errors = validate(req)
+
+	if (errors.length) {
+		res.status(400)
+		return res.json({
+			error: 'Invalid request',
+			messages: errors,
+		})
+	}
+
 	lastIndex++
 
 	const post = {
@@ -63,6 +73,15 @@ function store(req, res) {
 function update(req, res) {
     
 	const id = parseInt(req.params.id)
+	const errors = validate(req)
+
+	if (errors.length) {
+		res.status(400)
+		return res.json({
+			error: 'Invalid request',
+			messages: errors,
+		})
+	}
 	const post = posts.find((post) => post.id === id)
 
 	if (!post) {
@@ -137,3 +156,27 @@ function destroy(req, res) {
 
 
 module.exports = { index, show, store, update, modify, destroy }
+
+
+
+function validate(req) {
+
+	const { titolo, contenuto, immagine, tags} = req.body
+
+	const errors = []
+
+	if (!titolo) {
+		errors.push('titolo is required')
+	}
+	if (!contenuto) {
+		errors.push('contenuto is required')
+	}
+	if (!immagine) {
+		errors.push('Immagine is required')
+	}
+	if (!tags) {
+		errors.push('tags is required')
+	}
+	return errors
+	
+}
