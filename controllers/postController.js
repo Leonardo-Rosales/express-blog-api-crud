@@ -52,7 +52,7 @@ function store(req, res) {
 		immagine,
 		tags
 	}
-	
+
 	console.log(post);
 	posts.push(post)
 	res.status(201).send(post)
@@ -62,9 +62,32 @@ function store(req, res) {
 
 function update(req, res) {
     
-	const id = req.params.id
-	res.send(`Aggiorno il post con id: ${id}`)
+	const id = parseInt(req.params.id)
+	const post = posts.find((post) => post.id === id)
+
+	if (!post) {
+		res.status(404)
+
+		return res.json({
+			error: 'Post not found',
+			message:'Il post non è stato rovato'
+		})
+	}
+	
+	const { titolo, contenuto, immagine, tags} = req.body
+
+	post.titolo = titolo,
+	post.contenuto = contenuto,
+	post.immagine = immagine,
+	post.tags = tags
+	
+	console.log(post);
+	console.log(posts);
+	
+	res.json(post)
+
 }
+
 
 
 function modify(req, res) {
