@@ -7,6 +7,7 @@ const posts = require('./data/posts')
 
 
 app.use(express.static('public'))
+app.use(express.json())
 
 app.get('/', (req, res) => {
 	res.send('<h1>express-blog-intro</h1>');
