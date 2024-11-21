@@ -92,8 +92,29 @@ function update(req, res) {
 
 function modify(req, res) {
 
-	const id = req.params.id
-	res.send(`Modifico il post con id: ${id}`)
+	const id = parseInt(req.params.id)
+	const post = posts.find((post) => post.id === id)
+
+	if (!post) {
+		res.status(404)
+
+		return res.json({
+			error: 'Post not found',
+			message:'Il post non è stato rovato'
+		})
+	}
+	
+	const { titolo, contenuto, immagine, tags} = req.body
+
+	if (titolo) post.titolo = titolo
+	if (contenuto) post.contenuto = contenuto
+	if (immagine) post.immagine = immagine
+	if (tags) post.tags = tags
+
+	console.log(post);
+	console.log(posts);
+
+	res.json(post)
 }
 
 
