@@ -24,17 +24,17 @@ function index(req, res) {
 
 function show(req, res) {
 
-	const id = parseInt(req.params.id)
-	const post = posts.find((post) => post.id === id)
-	let result = post
-	if (!post) {
-		res.status(404)
-		result = {
-			error: 'Post not found',
-			message: 'Il post non è stato trovato.',
-		}
-	}
-	res.json(result)
+	// const id = parseInt(req.params.id)
+	// const post = posts.find((post) => post.id === id)
+	// let result = post
+	// if (!post) {
+	// 	res.status(404)
+	// 	result = {
+	// 		error: 'Post not found',
+	// 		message: 'Il post non è stato trovato.',
+	// 	}
+	// }
+	res.json(req.post)
 }
 
 
@@ -72,7 +72,7 @@ function store(req, res) {
 
 function update(req, res) {
     
-	const id = parseInt(req.params.id)
+	// const id = parseInt(req.params.id)
 	const errors = validate(req)
 
 	if (errors.length) {
@@ -82,28 +82,26 @@ function update(req, res) {
 			messages: errors,
 		})
 	}
-	const post = posts.find((post) => post.id === id)
+	// const post = posts.find((post) => post.id === id)
 
-	if (!post) {
-		res.status(404)
+	// if (!post) {
+	// 	res.status(404)
 
-		return res.json({
-			error: 'Post not found',
-			message:'Il post non è stato rovato'
-		})
-	}
+	// 	return res.json({
+	// 		error: 'Post not found',
+	// 		message:'Il post non è stato rovato'
+	// 	})
+	// }
 	
 	const { titolo, contenuto, immagine, tags} = req.body
 
-	post.titolo = titolo,
-	post.contenuto = contenuto,
-	post.immagine = immagine,
-	post.tags = tags
+	req.post.titolo = titolo,
+	req.post.contenuto = contenuto,
+	req.post.immagine = immagine,
+	req.post.tags = tags
 	
-	console.log(post);
-	console.log(posts);
 	
-	res.json(post)
+	res.json(req.post)
 
 }
 
@@ -111,43 +109,43 @@ function update(req, res) {
 
 function modify(req, res) {
 
-	const id = parseInt(req.params.id)
-	const post = posts.find((post) => post.id === id)
+	// const id = parseInt(req.params.id)
+	// const post = posts.find((post) => post.id === id)
 
-	if (!post) {
-		res.status(404)
+	// if (!post) {
+	// 	res.status(404)
 
-		return res.json({
-			error: 'Post not found',
-			message:'Il post non è stato rovato'
-		})
-	}
+	// 	return res.json({
+	// 		error: 'Post not found',
+	// 		message:'Il post non è stato rovato'
+	// 	})
+	// }
 	
 	const { titolo, contenuto, immagine, tags} = req.body
 
-	if (titolo) post.titolo = titolo
-	if (contenuto) post.contenuto = contenuto
-	if (immagine) post.immagine = immagine
-	if (tags) post.tags = tags
+	if (titolo) req.post.titolo = titolo
+	if (contenuto) req.post.contenuto = contenuto
+	if (immagine) req.post.immagine = immagine
+	if (tags) req.post.tags = tags
 
-	console.log(post);
-	console.log(posts);
-
-	res.json(post)
+	res.json(req.post)
 }
 
 
 function destroy(req, res) {
 
-	const id = parseInt(req.params.id)
-	const postIndex = posts.findIndex((post) => post.id === id)
-	if (postIndex === -1) {
-		res.status(404)
-		return res.json({
-			error: 'Post not found',
-			message: 'Il post non è stato trovato.',
-		})
-	}
+	// const id = parseInt(req.params.id)
+	// const postIndex = posts.findIndex((post) => post.id === id)
+	// if (postIndex === -1) {
+	// 	res.status(404)
+	// 	return res.json({
+	// 		error: 'Post not found',
+	// 		message: 'Il post non è stato trovato.',
+	// 	})
+	// }
+
+	const post = req.post
+	const postIndex = posts.findIndex((p) => p.id === post.id)
 	posts.splice(postIndex, 1)
     console.log(posts);
     

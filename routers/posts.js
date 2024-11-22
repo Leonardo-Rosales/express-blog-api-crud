@@ -1,6 +1,27 @@
 const express = require('express')
 const router = express.Router()
 const postController = require('../controllers/postController')
+const posts = require('../data/posts')
+
+router.param('id', (req, res, next, id) => {
+    
+    const post = posts.find((post) => post.id === parseInt(id))
+
+    if (post) {
+        
+        req.post = post
+        next()
+    } else {
+
+        res.status(404)
+        res.json({
+            
+            from: 'middleware param',
+            error: 'Post not found',
+            message: 'Il post non è stato trovato'
+        })
+    }
+})
 
 // index
 
