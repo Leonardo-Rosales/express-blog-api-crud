@@ -40,8 +40,8 @@ function show(req, res) {
 
 function store(req, res) {
 
-	const { titolo, contenuto, immagine, tags } = req.body
-	console.log(titolo, contenuto, immagine, tags);
+	const { title, content, image, tags } = req.body
+	console.log(title, content, image, tags);
 
 	const errors = validate(req)
 
@@ -57,9 +57,9 @@ function store(req, res) {
 
 	const post = {
 		id: lastIndex,
-		titolo,
-		contenuto,
-		immagine,
+		title,
+		content,
+		image,
 		tags
 	}
 
@@ -71,7 +71,7 @@ function store(req, res) {
 
 
 function update(req, res) {
-    
+
 	// const id = parseInt(req.params.id)
 	const errors = validate(req)
 
@@ -92,15 +92,15 @@ function update(req, res) {
 	// 		message:'Il post non è stato rovato'
 	// 	})
 	// }
-	
-	const { titolo, contenuto, immagine, tags} = req.body
 
-	req.post.titolo = titolo,
-	req.post.contenuto = contenuto,
-	req.post.immagine = immagine,
-	req.post.tags = tags
-	
-	
+	const { title, content, image, tags } = req.body
+
+	req.post.title = title,
+		req.post.content = content,
+		req.post.image = image,
+		req.post.tags = tags
+
+
 	res.json(req.post)
 
 }
@@ -120,12 +120,12 @@ function modify(req, res) {
 	// 		message:'Il post non è stato rovato'
 	// 	})
 	// }
-	
-	const { titolo, contenuto, immagine, tags} = req.body
 
-	if (titolo) req.post.titolo = titolo
-	if (contenuto) req.post.contenuto = contenuto
-	if (immagine) req.post.immagine = immagine
+	const { title, content, image, tags } = req.body
+
+	if (title) req.post.title = title
+	if (content) req.post.content = content
+	if (image) req.post.image = image
 	if (tags) req.post.tags = tags
 
 	res.json(req.post)
@@ -147,8 +147,8 @@ function destroy(req, res) {
 	const post = req.post
 	const postIndex = posts.findIndex((p) => p.id === post.id)
 	posts.splice(postIndex, 1)
-    console.log(posts);
-    
+	console.log(posts);
+
 	res.sendStatus(204)
 }
 
@@ -159,22 +159,22 @@ module.exports = { index, show, store, update, modify, destroy }
 
 function validate(req) {
 
-	const { titolo, contenuto, immagine, tags} = req.body
+	const { title, content, image, tags } = req.body
 
 	const errors = []
 
-	if (!titolo) {
+	if (!title) {
 		errors.push('titolo is required')
 	}
-	if (!contenuto) {
+	if (!content) {
 		errors.push('contenuto is required')
 	}
-	if (!immagine) {
+	if (!image) {
 		errors.push('Immagine is required')
 	}
 	if (!tags) {
 		errors.push('tags is required')
 	}
 	return errors
-	
+
 }
